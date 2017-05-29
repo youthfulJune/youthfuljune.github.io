@@ -298,6 +298,347 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://youthfuljune.github.io/youthfuljune.github.io/youthfuljune.github.io/2017/05/12/栈与队列/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="June">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/youthfuljune.github.io/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="June">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/youthfuljune.github.io/2017/05/12/栈与队列/" itemprop="url">
+                  栈与队列
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-12T00:03:51+08:00">
+                2017-05-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/youthfuljune.github.io/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/youthfuljune.github.io/2017/05/12/栈与队列/" class="leancloud_visitors" data-flag-title="栈与队列">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h5 id="一、栈"><a href="#一、栈" class="headerlink" title="一、栈"></a>一、栈</h5><pre><code>1.1 栈的概念
+    栈(stack),也称为堆栈，是一种容器，可存入数据元素、访问元素、
+    删除元素，其特点在于只能允许在容器的一端进行加入数据和输出数
+    据的运算。没有位置概念，保证任何时候可以访问、删除的元素都是
+    此前最后存入的那个元素，确定了一种默认的访问顺序。
+
+1.2 栈的运作原理
+    由于栈数据结构只允许在一端进行操作，故按照后进先出
+    (LIFO,Last In First Out)的原理运作
+</code></pre><p><img src="https://youthfuljune.github.io/markphoto/栈示意图.jpg" alt="image"></p>
+<pre><code>1.3 栈结构的实现
+    栈可以用顺序表实现，也可以用链表实现。
+
+    1.3.1 用Python的列表list实现栈
+        class StackUnderflow(ValueError):
+            &apos;&apos;&apos;与ValueError所有的异常有所区分&apos;&apos;&apos;
+            pass
+        class ListStack(object):
+            &apos;&apos;&apos;list实现的栈&apos;&apos;&apos;
+            def __init__(self):
+                self._elem = []
+
+            def push(self,item):
+                &apos;&apos;&apos;添加一个新的元素item到栈顶&apos;&apos;&apos;
+                self._elem.append(item)
+
+            def pop(self):
+                &apos;&apos;&apos;弹出栈顶元素&apos;&apos;&apos;
+                if self._elem == []:
+                    raise  StackUnderflow(&quot;lickStack.pop()&quot;)
+                return self._elem.pop()
+
+            def peek(self):
+                &apos;&apos;&apos;返回栈顶元素&apos;&apos;&apos;
+                if self._elem == []:
+                    raise StackUnderflow(&quot;ListStack.peek()&quot;)
+                return self._elem[len(self._elem)-1]#self._elem(-1)
+
+            def is_empty(self):
+                &apos;&apos;&apos;判断栈是否为空&apos;&apos;&apos;
+                return self._elem == []
+
+            def size(self):
+                &apos;&apos;&apos;返回栈的元素个数&apos;&apos;&apos;
+                return len(self._elem)
+
+    1.3.2  用链表的方式实现栈
+            class StackUnderflow(ValueError):
+                pass
+
+            class Node(object):
+                def __init__(self,item,next=None):
+                    self.item = item
+                    self.next = next
+
+            class LinklistStack(object):
+                &apos;&apos;&apos;链表实现的栈&apos;&apos;&apos;
+
+                def __init__(self):
+                    self._top = None
+
+                def push(self,item):
+                    &apos;&apos;&apos;添加一个新的元素item到栈顶&apos;&apos;&apos;
+                    self._top = Node(item,self._top)
+
+                def pop(self):
+                    &apos;&apos;&apos;弹出栈顶元素&apos;&apos;&apos;
+                    if self._top == []:
+                        raise  StackUnderflow(&quot;lickStack.pop()&quot;)
+                    #弹出栈元素后，要将self,_top转换位置
+                    cur = self._top
+                    self._top = cur.next
+                    return cur.item
+
+                def peek(self):
+                    &apos;&apos;&apos;返回栈顶元素&apos;&apos;&apos;
+                    if self._top == []:
+                        raise StackUnderflow(&quot;ListStack.peek()&quot;)
+                    return self._top.item
+
+                def is_empty(self):
+                    &apos;&apos;&apos;判断栈是否为空&apos;&apos;&apos;
+                    return self._top == []
+
+                def size(self):
+                    &apos;&apos;&apos;返回栈的元素个数&apos;&apos;&apos;
+                    count = 0
+                    cur = self._top
+                    while cur != None:
+                        count += 1
+                        cur = cur.next
+                    return count
+
+            if __name__ == &quot;__main__&quot;:
+                #创建栈
+                stack = LinklistStack()
+</code></pre><h5 id="二、队列"><a href="#二、队列" class="headerlink" title="二、队列"></a>二、队列</h5><pre><code>2.1  队列的概念
+    队列(queue)是只允许在一端进行插入操作，而在另一端进行删除操
+    作的线性表
+2.2  队列的运作原理
+    队列是一种先进先出的(First In First Ou)）的线性表,简称FIFO。
+    允许插入的一端为队尾，允许删除的一端为队头。队列不允许在中间
+    部位进行操作！假设队列是q=（a1，a2，……，an），那么a1就是队头
+    元素，而an是队尾元素。这样我们就可以删除时，总是从a1开始，而
+    插入时，总是在队列最后。这也比较符合我们通常生活中的习惯，排
+    在第一个的优先出列，最后来的当然排在队伍最后。
+
+2.3  队列结构实现
+     队列也可以用顺序表实现，也可以用链表实现。
+
+    2.3.1  用Python的列表list实现队列
+        class StackUnderflow(ValueError):
+            pass
+
+        class listQueue(object):
+            &apos;&apos;&apos;链表实现的栈&apos;&apos;&apos;
+
+            def __init__(self):
+                self._top = []
+
+            def enqueue(self,item):
+                &apos;&apos;&apos;添加一个新的元素item到队列&apos;&apos;&apos;
+                self._top.insert(0,item)
+
+            def dequeue(self):
+                &apos;&apos;&apos;弹出元素&apos;&apos;&apos;
+                if self._top == []:
+                    raise  StackUnderflow(&quot;lickStack.pop()&quot;)
+                #弹出元素后，要将self,_rear转换位置
+                return self._top.pop()
+
+            def is_empty(self):
+                &apos;&apos;&apos;判断栈是否为空&apos;&apos;&apos;
+                return self._top == []
+
+            def size(self):
+                &apos;&apos;&apos;返回栈的元素个数&apos;&apos;&apos;
+                return len(self._top)
+
+    2.3.2  链表实现队列  
+        class StackUnderflow(ValueError):
+            pass
+
+        class Node(object):
+            def __init__(self,item,next=None):
+                self.item = item
+                self.next = next
+
+        class LinklistQueue(object):
+            &apos;&apos;&apos;链表实现的栈&apos;&apos;&apos;
+
+            def __init__(self):
+                self._top = None
+
+            def enqueue(self,item):
+                &apos;&apos;&apos;添加一个新的元素item到队列&apos;&apos;&apos;
+                if self._top == None:
+                    self._top = Node(item,self._top)
+                    self.rear = self._top
+                else:
+                    self.rear.next = Node(item)
+                    self.rear = self.rear.next
+
+
+            def dequeue(self):
+                &apos;&apos;&apos;弹出元素&apos;&apos;&apos;
+                if self.rear == []:
+                    raise  StackUnderflow(&quot;lickStack.pop()&quot;)
+                #弹出元素后，要将self,_rear转换位置
+                cur = self._top
+                self._top = cur.next
+                return cur.item
+
+            def is_empty(self):
+                &apos;&apos;&apos;判断栈是否为空&apos;&apos;&apos;
+                return self._top == []
+
+            def size(self):
+                &apos;&apos;&apos;返回栈的元素个数&apos;&apos;&apos;
+                count = 0
+                cur = self._top
+                while cur != None:
+                    count += 1
+                    cur = cur.next
+                return count
+        if __name__ == &quot;__main__&quot;:
+            #创建队列
+             queue = LinklistQueue()
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://youthfuljune.github.io/youthfuljune.github.io/youthfuljune.github.io/2017/05/08/线性表之链式存储/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1406,7 +1747,7 @@ print(List3)
           
             <div class="site-state-item site-state-posts">
               <a href="/youthfuljune.github.io/archives">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
